@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import { AuthContext } from '../components/auth';
@@ -7,9 +7,14 @@ import axios from "axios";
 function SignUpPage() {
   const [entry, setEntry] = useState("");
   const [characterCount, setCharacterCount] = useState(0)
-  const { logout, } = useContext(AuthContext);
+  const { logout, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return navigate("/login")
+    }
+  });
   const handleEntryChange = (e) => {
     setEntry(e.target.value);
     setCharacterCount(e.target.value.length)
