@@ -26,7 +26,7 @@ function SignUpPage() {
     if (token) {
       try {
         const response = await axios.post(
-          "https://journal-app-fmttxbcw2a-uc.a.run.app/journal/create",
+          "https://journal-app-fmttxbcw2a-nw.a.run.app//journal/create",
           {
             entry,
           },
