@@ -1,6 +1,6 @@
 # journal-app
 
-## How To Run Using Node
+## How To Run Journal App Using Node
 
 ## Web
 
@@ -36,7 +36,7 @@ Set up `DATABASE_URL` environment variable as `DATABASE_URL=postgresql://postgre
 
 Run `prisma migrate deploy` to run the database migration which adds the required tables 
 
-## Startin the API
+## Starting the API
 
 Run `npm run start-dev` to start the server with nodemon which can be accessed from `http://localhost:4000`
 
