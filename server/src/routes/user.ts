@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { compare, genSalt, genSaltSync, hashSync } from "bcrypt";
+import { compare, genSaltSync, hashSync } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../types";
 
@@ -162,7 +162,7 @@ export default async function (app: FastifyInstance) {
             expiresIn: "1h",
           });
           return res.status(200).send({
-            message: "Login  Successful",
+            message: "Login Successful",
             body: {
               token,
               user: { id, emailAddress },

@@ -1,5 +1,6 @@
 
 import Fastify, { FastifyInstance} from 'fastify';
+import cors from '@fastify/cors'
 import { DbPlugin } from './plugins';
 import routes from './routes';
 import cron from 'node-cron';
@@ -11,7 +12,9 @@ const server: FastifyInstance = Fastify({logger: true});
 server.register(DbPlugin);
 server.register(routes);
 
+
 export const start = async () => {
+  await server.register(cors, {})
     try {
       try {
         // Schedule the cron job to run daily at 9:00 AM
