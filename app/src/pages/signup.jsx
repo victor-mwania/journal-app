@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../components/auth';
 
@@ -20,7 +20,7 @@ function SignUpPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4000/user/signup", {
+      const response = await axios.post("https://journal-app-fmttxbcw2a-uc.a.run.app/user/signup", {
         emailAddress,
         password,
       });
@@ -82,6 +82,12 @@ function SignUpPage() {
                     >
                       Sign Up
                     </button>
+                  </div>
+                  <div className="text-center my-5">
+                    <span>or</span>
+                    <div className="font-semibold text-lg">
+                      <Link to="/login">Login</Link>
+                    </div>
                   </div>
                 </form>
               </div>
