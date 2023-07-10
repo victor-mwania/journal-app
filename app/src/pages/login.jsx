@@ -22,7 +22,7 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://journal-app-fmttxbcw2a-nw.a.run.app//user/login", {
+      const response = await axios.post("https://journal-app-fmttxbcw2a-nw.a.run.app/user/login", {
         emailAddress,
         password,
       });
