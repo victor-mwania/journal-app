@@ -20,7 +20,7 @@ function SignUpPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://journal-app-fmttxbcw2a-nw.a.run.app//user/signup", {
+      const response = await axios.post("https://journal-app-fmttxbcw2a-nw.a.run.app/user/signup", {
         emailAddress,
         password,
       });
