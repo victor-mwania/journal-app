@@ -21,7 +21,7 @@ function SignUpPage() {
     if (token) {
       try {
         const response = await axios.post(
-          "http://localhost:4000/journal/create",
+          "https://journal-app-fmttxbcw2a-uc.a.run.app/journal/create",
           {
             entry,
           },

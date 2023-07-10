@@ -2,6 +2,11 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { compare, genSaltSync, hashSync } from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../types";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const secret = process.env.JWT_SECRET || 'secret';
 
 export default async function (app: FastifyInstance) {
   app.post(
@@ -77,7 +82,7 @@ export default async function (app: FastifyInstance) {
         });
 
         const { emailAddress, id } = newUser;
-        const token = jwt.sign({ id, emailAddress }, "SECRET", {
+        const token = jwt.sign({ id, emailAddress }, secret, {
           expiresIn: "1h",
         });
         return {
@@ -158,7 +163,7 @@ export default async function (app: FastifyInstance) {
         const match = await compare(payload.password, user.password);
         if (match) {
           const { emailAddress, id } = user;
-          const token = jwt.sign({ id, emailAddress }, "SECRET", {
+          const token = jwt.sign({ id, emailAddress }, secret, {
             expiresIn: "1h",
           });
           return res.status(200).send({

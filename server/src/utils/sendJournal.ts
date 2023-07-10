@@ -1,5 +1,9 @@
-import { JournalEntry, PrismaClient, User } from "prisma/prisma-client";
+import { JournalEntry, User } from "prisma/prisma-client";
+import nodemailer from "nodemailer";
 import { db } from "../plugins/db";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 type JournalEntryWithUser = JournalEntry & {
   user: User;
@@ -26,7 +30,6 @@ const sendJournals = async () => {
   }
 
   const userIds = getUserIdsFromPublishedEntries(entries);
-  // Exclude users who have not published on the current day
   const usersToEmail: User[] = await db.user.findMany({
     where: {
       id: {
@@ -49,7 +52,7 @@ const sendJournals = async () => {
       try {
         await sendEmail(user.emailAddress, randomEntry);
       } catch (error) {
-        console.log(`error sending journal entry ${randomEntry.id}`)
+        console.log(`error sending journal entry ${randomEntry.id}`);
       }
     })
   );
@@ -65,6 +68,26 @@ const getRandomEntry = (entries: JournalEntry[]): JournalEntry => {
 };
 
 async function sendEmail(email: string, entry: JournalEntry): Promise<void> {
-  console.log(`send to ${email}  entry ${entry}`);
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASSWORD,
+    },
+  });
+
+  try {
+    const info = await transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: email,
+      subject: "Daily Journal Entry",
+      text: `Here is your random journal entry for today:\n\n${entry.entry}`,
+    });
+
+    console.log("Message sent: %s", info.messageId);
+  } catch (error) {
+    console.log(error);
+  }
 }
 export { sendJournals };

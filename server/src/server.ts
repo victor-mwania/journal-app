@@ -17,15 +17,14 @@ export const start = async () => {
   await server.register(cors, {})
     try {
       try {
-        // Schedule the cron job to run daily at 9:00 AM
         console.log('starting send journal cron job')
-        cron.schedule(`*/10 * * * * * `, async() => {
+        cron.schedule('0 12 * * *', async () => {
           try {
             await sendJournals()
           } catch (error) {
             console.error('Failed to send journal entries:', error);
           }
-        });
+        }, { timezone: 'Africa/Nairobi' });
       }catch{
         console.error('error starting send journal cron job')
       }
